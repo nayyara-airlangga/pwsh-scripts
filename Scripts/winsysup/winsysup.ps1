@@ -57,7 +57,7 @@ if ($PackageManager -eq [PackageManagers]::choco)
     Exit
   } else
   {
-    Write-Output "Updating chocolatey packages..."
+    Write-Output "Upgrading chocolatey packages..."
     Write-Output ""
 
     choco upgrade all -y
@@ -80,7 +80,7 @@ if ($PackageManager -eq [PackageManagers]::choco)
     Exit
   } else
   {
-    Write-Output "Updating chocolatey packages..."
+    Write-Output "Upgrading winget packages..."
     Write-Output "" 
 
     winget upgrade --all

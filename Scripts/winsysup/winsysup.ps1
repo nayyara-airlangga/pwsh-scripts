@@ -57,6 +57,10 @@ if ($PackageManager -eq [PackageManagers]::choco)
     Exit
   } else
   {
+    Write-Output "Updating chocolatey packages..."
+    Write-Output ""
+
+    choco upgrade all -y
     Exit
   }  
 } elseif ($PackageManager -eq [PackageManagers]::winget)
@@ -73,5 +77,13 @@ if ($PackageManager -eq [PackageManagers]::choco)
     Write-Output ""
 
     winget upgrade
+    Exit
+  } else
+  {
+    Write-Output "Updating chocolatey packages..."
+    Write-Output "" 
+
+    winget upgrade --all
+    Exit
   }
 }

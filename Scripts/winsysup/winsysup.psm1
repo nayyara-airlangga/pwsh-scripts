@@ -6,6 +6,12 @@ public enum PackageManagers
 }
 "@
 
+Function IsAdmin
+{
+  $User = [Security.Principal.WindowsIdentity]::GetCurrent()
+
+  Return (New-Object Security.Principal.WindowsPrincipal $User).IsInRole([Security.Principal.WindowsBuiltinRole]::Administrator)
+}
 
 Function CommandExists
 {
@@ -40,4 +46,5 @@ Function LogError
 }
 
 Export-ModuleMember -Function CommandExists
+Export-ModuleMember -Function IsAdmin
 Export-ModuleMember -Function LogError

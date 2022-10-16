@@ -57,6 +57,12 @@ if ($PackageManager -eq [PackageManagers]::choco)
     Exit
   } else
   {
+    if (-Not (IsAdmin))
+    {
+      LogError "chocolatey needs to be run with elevated privileges."
+      Exit
+    }
+
     Write-Output "Upgrading chocolatey packages..."
     Write-Output ""
 

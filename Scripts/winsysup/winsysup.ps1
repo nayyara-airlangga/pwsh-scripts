@@ -8,7 +8,10 @@ Param (
 
   [PackageManagers]
   [Alias("p")]
-  $PackageManager = [PackageManagers]::choco
+  $PackageManager = [PackageManagers]::choco,
+
+  [Switch]
+  $Outdated
 )
 
 # Import modules
@@ -28,6 +31,10 @@ $HelpText
 Options:
   -h, -Help, -?
     Displays this help menu.
+  -p, -PackageManager [choco | winget]
+    The package manager to use. The default is choco.
+  -Outdated
+    List all outdated packages.
 "
 
   Exit
@@ -35,8 +42,36 @@ Options:
 
 if ($PackageManager -eq [PackageManagers]::choco)
 {
-  if (CommandExists $PackageManager)
+  if (-Not (CommandExists $PackageManager))
   {
-    Write-Output it exists
+    LogError "$PackageManager not found"
+    Exit
+  } 
+  
+  if ($Outdated)
+  {
+    Write-Output "Listing outdated chocolatey packages..."
+    Write-Output ""
+
+    choco outdated | findstr /a:4 "true false"
+    Exit
+  } else
+  {
+    Exit
+  }  
+} elseif ($PackageManager -eq [PackageManagers]::winget)
+{
+  if (-Not (CommandExists $PackageManager))
+  {
+    LogError "$PackageManager not found"
+    Exit
+  }
+
+  if($Outdated)
+  {
+    Write-Output "Listing outdated winget packages..."
+    Write-Output ""
+
+    winget upgrade
   }
 }

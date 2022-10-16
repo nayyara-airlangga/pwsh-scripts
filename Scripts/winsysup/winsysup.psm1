@@ -18,7 +18,7 @@ Function CommandExists
 
   try
   {
-    if(Get-Command $Command)
+    if(Get-Command $Command -ErrorAction SilentlyContinue)
     {
       Return $true
     }
@@ -27,4 +27,17 @@ Function CommandExists
   }
 }
 
+Function LogError
+{
+  [CmdLetBinding()]
+  Param(
+    [String]
+    [Parameter(Mandatory=$true)]
+    $Message
+  )
+
+  Write-Output "Error: $Message"
+}
+
 Export-ModuleMember -Function CommandExists
+Export-ModuleMember -Function LogError
